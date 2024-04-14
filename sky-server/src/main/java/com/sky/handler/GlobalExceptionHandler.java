@@ -6,6 +6,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import java.sql.SQLIntegrityConstraintViolationException;
+
+import static com.sky.constant.MessageConstant.ALREADY_EXIT;
+import static com.sky.constant.MessageConstant.UNKNOWN_ERROR;
+
 /**
  * 全局异常处理器，处理项目中抛出的业务异常
  */
@@ -22,6 +27,17 @@ public class GlobalExceptionHandler {
     public Result exceptionHandler(BaseException ex){
         log.error("异常信息：{}", ex.getMessage());
         return Result.error(ex.getMessage());
+    }
+    @ExceptionHandler
+    public Result exceptionHandler(SQLIntegrityConstraintViolationException ex){
+        //Duplicate entry '000001' for key 'employee.idx_username'
+        String msg=ex.getMessage();
+        if(msg.contains("Duplicate entry")){
+            String msgs[]=msg.split(" ");
+            return Result.error(msgs[2]+ALREADY_EXIT);
+        }else{
+            return Result.error(UNKNOWN_ERROR);
+        }
     }
 
 }
