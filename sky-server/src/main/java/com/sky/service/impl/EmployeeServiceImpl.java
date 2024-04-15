@@ -70,12 +70,12 @@ public class EmployeeServiceImpl implements EmployeeService {
     public void save(EmployeeDTO employeeDTO) {
         Employee employee=new Employee();
         BeanUtils.copyProperties(employeeDTO,employee);//把DTO的值复制到Entity上
-        employee.setCreateTime(LocalDateTime.now());//添加时间
-        employee.setUpdateTime(LocalDateTime.now());
+        //employee.setCreateTime(LocalDateTime.now());//添加时间
+        //employee.setUpdateTime(LocalDateTime.now());
         employee.setStatus(StatusConstant.ENABLE);//添加状态
         employee.setPassword(DigestUtils.md5DigestAsHex("123456".getBytes()));//添加原始加密密码
-        employee.setCreateUser(BaseContext.getCurrentId());//ThreadLocal
-        employee.setUpdateUser(BaseContext.getCurrentId());
+       // employee.setCreateUser(BaseContext.getCurrentId());//ThreadLocal
+        //employee.setUpdateUser(BaseContext.getCurrentId());
         employeeMapper.insert(employee);
     }
 
@@ -96,8 +96,8 @@ public class EmployeeServiceImpl implements EmployeeService {
         Employee employee = Employee.builder()
                 .status(status)
                 .id(id)
-                .updateUser(BaseContext.getCurrentId())
-                .updateTime(LocalDateTime.now())
+                //.updateUser(BaseContext.getCurrentId())
+               // .updateTime(LocalDateTime.now())
                 .build();
         employeeMapper.update(employee);
     }
@@ -110,8 +110,8 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public Employee getById(Integer id) {
         Employee employee=employeeMapper.getById(id);
-        employee.setUpdateUser(BaseContext.getCurrentId());
-        employee.setUpdateTime(LocalDateTime.now());
+        //employee.setUpdateUser(BaseContext.getCurrentId());
+        //employee.setUpdateTime(LocalDateTime.now());
         employee.setPassword("****");
         return employee;
     }
@@ -124,8 +124,8 @@ public class EmployeeServiceImpl implements EmployeeService {
     public void updateEmployee(EmployeeDTO employeeDTO) {
         Employee employee=new Employee();
         BeanUtils.copyProperties(employeeDTO,employee);
-        employee.setUpdateUser(BaseContext.getCurrentId());
-        employee.setUpdateTime(LocalDateTime.now());
+       // employee.setUpdateUser(BaseContext.getCurrentId());
+        //employee.setUpdateTime(LocalDateTime.now());
         employeeMapper.update(employee);
     }
 
