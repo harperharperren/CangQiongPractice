@@ -85,12 +85,18 @@ public class EmployeeServiceImpl implements EmployeeService {
         return new PageResult(p.getTotal(),p.getResult());
     }
 
+    /**
+     * 启用禁用员工
+     * @param status
+     * @param id
+     */
     @Override
     public void startOrStop(Integer status, Long id) {
         Employee employee = Employee.builder()
                 .status(status)
                 .id(id)
                 .updateUser(BaseContext.getCurrentId())
+                .updateTime(LocalDateTime.now())
                 .build();
         employeeMapper.update(employee);
     }
