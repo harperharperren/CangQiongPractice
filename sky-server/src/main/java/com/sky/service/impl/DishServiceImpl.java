@@ -85,4 +85,19 @@ public class DishServiceImpl implements DishService {
         dishFlavorMapper.deleteByDishIds(ids);
 
     }
+
+    /**
+     * 根据id查找dish以及Flavor
+     * @param id
+     * @return
+     */
+    @Transactional
+    public DishVO getWithFlavorById(Long id) {
+        Dish dish=dishMapper.getById(id);
+        List<DishFlavor> flavors=dishFlavorMapper.getFlavorById(id);
+        DishVO dishVO = new DishVO();
+        BeanUtils.copyProperties(dish,dishVO);
+        dishVO.setFlavors(flavors);
+        return dishVO;
+    }
 }
