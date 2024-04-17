@@ -11,3 +11,8 @@ sky:
       access-key-id: LTAI5tBAFBtsfWqhP2wvM4cX
       access-key-secret: 5xMrplChFdaAzi1iEfapezzkRWmP8j
       bucket-name: web-tlias-harper
+  redis:
+    host: localhost
+    auth: 123456
+    port: 6379
+    database: 0
