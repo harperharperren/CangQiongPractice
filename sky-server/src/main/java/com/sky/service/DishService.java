@@ -15,4 +15,6 @@ public interface DishService {
     void delete(List<Long> ids);
 
     DishVO getWithFlavorById(Long id);
+
+    void update(DishDTO dishDTO);
 }
