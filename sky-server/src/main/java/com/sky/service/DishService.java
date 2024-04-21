@@ -27,4 +27,6 @@ public interface DishService {
     List<DishVO> listWithFlavor(Dish dish);
 
     void startOrEndDish(Integer status, Integer dishId);
+
+    List<Dish> getdishesBySetmealId(Long setmealId);
 }

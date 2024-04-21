@@ -67,6 +67,8 @@ public interface DishMapper {
      */
     List<Dish> list(Dish dish);
 
+
+
     /**
      * 启用禁用菜品
      * @param status
@@ -74,4 +76,6 @@ public interface DishMapper {
      */
     @Update("update dish set status=#{status} where id=#{dishId}")
     void startOrEndDish(Integer status, Integer dishId);
+
+
 }

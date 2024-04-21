@@ -145,8 +145,24 @@ public class DishServiceImpl implements DishService {
         return dishVOList;
     }
 
-    @Override
+    /**
+     * 菜品启售停售
+     * @param status
+     * @param dishId
+     */
     public void startOrEndDish(Integer status, Integer dishId) {
         dishMapper.startOrEndDish(status,dishId);
+    }
+
+    /**
+     * 根据分类id查找菜品
+     * @param setmealId
+     * @return
+     */
+    public List<Dish> getdishesBySetmealId(Long setmealId) {
+        Dish dish = Dish.builder()
+                .categoryId(setmealId).build();
+        List<Dish> dishes = dishMapper.list(dish);
+        return dishes;
     }
 }
