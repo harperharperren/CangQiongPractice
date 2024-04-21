@@ -84,4 +84,10 @@ public interface SetmealMapper {
      */
     @Update("update setmeal set status=#{status} where id=#{id}")
     void startOrEnd(Integer status, Integer id);
+
+    /**
+     * 传入新的setmeal，来修改setmeal
+     * @param setmeal
+     */
+    void update(Setmeal setmeal);
 }

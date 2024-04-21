@@ -33,4 +33,6 @@ public interface SetmealService {
     void startOrEnd(Integer status, Integer id);
 
     SetmealVO getBySetmealId(Long id);
+
+    void update(SetmealDTO setmealDTO);
 }
