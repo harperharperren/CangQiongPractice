@@ -9,6 +9,7 @@ import com.sky.service.impl.DishServiceImpl;
 import com.sky.vo.DishVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.models.auth.In;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -76,6 +77,13 @@ public class DishController {
     public Result update(@RequestBody DishDTO dishDTO){
         log.info("新增菜品{}",dishDTO);
         dishServiceImpl.update(dishDTO);
+        return Result.success();
+    }
+    @ApiOperation("菜品启售停售")
+    @PostMapping("/status/{status}")
+    public Result startOrEndDish(@PathVariable("status") Integer status,@RequestParam("id") Integer dishId){
+        log.info("要修改的菜品id为{}，其要修改为{状态}",dishId,status==1?"启售":"停售");
+        dishServiceImpl.startOrEndDish(status,dishId);
         return Result.success();
     }
 }
