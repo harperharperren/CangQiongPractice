@@ -25,4 +25,6 @@ public interface SetmealService {
     List<DishItemVO> getDishItemById(Long id);
 
     void addSetmeal(SetmealDTO setmealDTO);
+
+    PageResult pageQuery(SetmealPageQueryDTO setmealPageQueryDTO);
 }

@@ -1,6 +1,8 @@
 package com.sky.controller.admin;
 
 import com.sky.dto.SetmealDTO;
+import com.sky.dto.SetmealPageQueryDTO;
+import com.sky.result.PageResult;
 import com.sky.result.Result;
 import com.sky.service.SetmealService;
 import com.sky.service.impl.SetmealServiceImpl;
@@ -8,10 +10,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/admin/setmeal")
@@ -27,5 +26,12 @@ public class SetmealController {
         log.info("添加的套餐信息为{}",setmealDTO);
         setmealServiceImpl.addSetmeal(setmealDTO);
         return Result.success();
+    }
+    @ApiOperation("套餐分页查询功能")
+    @GetMapping("/page")
+    public Result<PageResult> Page(SetmealPageQueryDTO setmealPageQueryDTO){
+        log.info("要分页查询的信息为{}",setmealPageQueryDTO);
+        PageResult pageResult=setmealServiceImpl.pageQuery(setmealPageQueryDTO);
+        return Result.success(pageResult);
     }
 }
