@@ -10,6 +10,7 @@ import com.sky.vo.SetmealVO;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import java.util.List;
 
@@ -75,4 +76,12 @@ public interface SetmealMapper {
      * @param setmealIds
      */
     void deleteByIds(List<Long> setmealIds);
+
+    /**
+     * 根据套餐id修改启售停售
+     * @param status
+     * @param id
+     */
+    @Update("update setmeal set status=#{status} where id=#{id}")
+    void startOrEnd(Integer status, Integer id);
 }

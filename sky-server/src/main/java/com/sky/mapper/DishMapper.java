@@ -77,5 +77,11 @@ public interface DishMapper {
     @Update("update dish set status=#{status} where id=#{dishId}")
     void startOrEndDish(Integer status, Integer dishId);
 
-
+    /**
+     * 根据菜品类别id查找菜品
+     * @param id
+     * @return
+     */
+    @Select("select d.* from dish as d left join setmeal_dish as sd  on d.id=sd.dish_id")
+    List<Dish> getBySetmealId(Integer id);
 }

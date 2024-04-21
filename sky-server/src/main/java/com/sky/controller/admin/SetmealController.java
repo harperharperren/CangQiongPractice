@@ -8,6 +8,7 @@ import com.sky.service.SetmealService;
 import com.sky.service.impl.SetmealServiceImpl;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.models.auth.In;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.annotations.Delete;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +43,13 @@ public class SetmealController {
     public Result delete(@RequestParam("ids")  List<Long> setmealIds){
         log.info("要删除的套餐id为{}",setmealIds);
         setmealServiceImpl.delete(setmealIds);
+        return Result.success();
+    }
+    @ApiOperation("套餐启售停售功能")
+    @PostMapping("/status/{status}")
+    public Result startOrEnd(@PathVariable("status") Integer status,Integer id){
+        log.info("要修改状态的菜品id为：{},其要修改的状态为{}",id,status==1?"启售":"停售");
+        setmealServiceImpl.startOrEnd(status,id);
         return Result.success();
     }
 }

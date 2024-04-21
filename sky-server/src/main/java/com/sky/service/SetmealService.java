@@ -29,4 +29,6 @@ public interface SetmealService {
     PageResult pageQuery(SetmealPageQueryDTO setmealPageQueryDTO);
 
     void delete(List<Long> setmealIds);
+
+    void startOrEnd(Integer status, Integer id);
 }

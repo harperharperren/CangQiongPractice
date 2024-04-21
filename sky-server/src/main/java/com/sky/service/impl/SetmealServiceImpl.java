@@ -104,4 +104,25 @@ public class SetmealServiceImpl implements SetmealService {
             //批量删除setmealDish表信息
             setmealDishMapper.deleteByIds(setmealIds);
     }
+
+    /**
+     * 套餐的启售停售
+     * @param status
+     * @param id
+     */
+
+    public void startOrEnd(Integer status, Integer id) {
+        //启售套餐时需检验：套餐里是否有停售菜品，如果有要抛异常
+        if(status==StatusConstant.ENABLE){
+            List<Dish> dishes=dishMapper.getBySetmealId(id);
+            if(dishes!=null&& dishes.size()>0){
+                for (Dish dish : dishes) {
+                    if(dish.getStatus()==StatusConstant.DISABLE){
+                        throw new SetmealEnableFailedException(MessageConstant.SETMEAL_ENABLE_FAILED);
+                    }
+                }
+            }
+        }
+        setmealMapper.startOrEnd(status,id);
+    }
 }
