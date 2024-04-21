@@ -85,4 +85,23 @@ public class SetmealServiceImpl implements SetmealService {
         Page<SetmealVO> p=setmealMapper.page(setmealPageQueryDTO);
         return new PageResult(p.getTotal(),p.getResult());
     }
+
+    /**
+     * 根据套餐id批量删除套餐
+     * @param setmealIds
+     */
+    @Transactional
+    public void delete(List<Long> setmealIds) {
+        //检查是否是启售中的套餐，启售中不能删
+        for (Long setmealId : setmealIds) {
+            Setmeal setmeal=setmealMapper.getById(setmealId);
+            if(setmeal.getStatus()==StatusConstant.DISABLE){
+                throw new DeletionNotAllowedException(MessageConstant.SETMEAL_ON_SALE);
+            }
+        }
+            //批量删除setmeal表信息
+            setmealMapper.deleteByIds(setmealIds);
+            //批量删除setmealDish表信息
+            setmealDishMapper.deleteByIds(setmealIds);
+    }
 }

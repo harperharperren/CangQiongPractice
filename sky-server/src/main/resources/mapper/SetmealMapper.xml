@@ -37,4 +37,10 @@
         </where>
         order by s.create_time desc
     </select>
+    <delete id="deleteByIds">
+        delete from setmeal where id in
+        <foreach collection="setmealIds" item="setmealId" separator="," open="(" close=")">
+            #{setmealId}
+        </foreach>
+    </delete>
 </mapper>
