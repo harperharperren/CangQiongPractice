@@ -31,4 +31,6 @@ public interface SetmealService {
     void delete(List<Long> setmealIds);
 
     void startOrEnd(Integer status, Integer id);
+
+    SetmealVO getBySetmealId(Long id);
 }

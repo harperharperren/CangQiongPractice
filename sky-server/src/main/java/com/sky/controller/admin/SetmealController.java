@@ -6,6 +6,7 @@ import com.sky.result.PageResult;
 import com.sky.result.Result;
 import com.sky.service.SetmealService;
 import com.sky.service.impl.SetmealServiceImpl;
+import com.sky.vo.SetmealVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.models.auth.In;
@@ -52,4 +53,19 @@ public class SetmealController {
         setmealServiceImpl.startOrEnd(status,id);
         return Result.success();
     }
+//    @ApiOperation("修改菜品类别信息")
+//    @PutMapping
+//    public Result update(@RequestBody SetmealDTO setmealDTO){
+//        log.info("要修改的菜品类别信息为{}",setmealDTO);
+//        setmealServiceImpl.update(setmealDTO);
+//        return Result.success();
+//    }
+    @ApiOperation("根据setmealId查询套餐信息")
+    @GetMapping("/{id}")
+    public Result<SetmealVO> getBySetmealId(@PathVariable Long id){
+        log.info("要查询的SetmealId为{}",id);
+        SetmealVO setmealVO=setmealServiceImpl.getBySetmealId(id);
+        return Result.success(setmealVO);
+    }
+
 }

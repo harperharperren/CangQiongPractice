@@ -21,6 +21,7 @@ import com.sky.vo.SetmealVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
@@ -124,5 +125,20 @@ public class SetmealServiceImpl implements SetmealService {
             }
         }
         setmealMapper.startOrEnd(status,id);
+    }
+
+    /**
+     * 根据setmealId查询套餐信息
+     * @param id
+     * @return
+     */
+    public SetmealVO getBySetmealId(Long id) {
+        Setmeal setmeal = setmealMapper.getById(id);
+        List<SetmealDish> setmealDishes=setmealDishMapper.getSetmealDishesBySetmealId(id);
+        SetmealVO setmealVO = new SetmealVO();
+        BeanUtils.copyProperties(setmeal,setmealVO);
+        setmealVO.setSetmealDishes(setmealDishes);
+        return setmealVO;
+
     }
 }
