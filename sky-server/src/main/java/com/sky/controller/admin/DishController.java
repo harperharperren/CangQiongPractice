@@ -107,7 +107,7 @@ public class DishController {
      */
     @ApiOperation("根据分类id查找菜品功能")
     @GetMapping("/list")
-    public Result<List<Dish>> getDishesBySetmealId(Long setmealId){
+    public Result<List<Dish>> getDishesBySetmealId(@RequestParam("categoryId") Long setmealId){
         log.info("要查找的菜品分类id为{}",setmealId);
         List<Dish> dishes=dishServiceImpl.getdishesBySetmealId(setmealId);
         return Result.success(dishes);
