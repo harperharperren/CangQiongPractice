@@ -33,7 +33,6 @@ public class SetmealController {
         Setmeal setmeal = new Setmeal();
         setmeal.setCategoryId(categoryId);
         setmeal.setStatus(StatusConstant.ENABLE);
-
         List<Setmeal> list = setmealService.list(setmeal);
         return Result.success(list);
     }
