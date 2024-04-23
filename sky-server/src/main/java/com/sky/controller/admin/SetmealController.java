@@ -13,6 +13,7 @@ import io.swagger.models.auth.In;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.annotations.Delete;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -27,6 +28,7 @@ public class SetmealController {
 
     @ApiOperation("添加套餐")
     @PostMapping
+    @CacheEvict(cacheNames = "setmealCache",key = "#setmealDTO.categoryId")//清除之前该类的缓存数据
     public Result addSetmeal(@RequestBody SetmealDTO setmealDTO){
         log.info("添加的套餐信息为{}",setmealDTO);
         setmealServiceImpl.addSetmeal(setmealDTO);
@@ -41,6 +43,7 @@ public class SetmealController {
     }
     @ApiOperation("批量删除套餐")
     @DeleteMapping()
+    @CacheEvict(cacheNames = "setmealCache",allEntries = true)
     public Result delete(@RequestParam("ids")  List<Long> setmealIds){
         log.info("要删除的套餐id为{}",setmealIds);
         setmealServiceImpl.delete(setmealIds);
@@ -48,6 +51,7 @@ public class SetmealController {
     }
     @ApiOperation("套餐启售停售功能")
     @PostMapping("/status/{status}")
+    @CacheEvict(cacheNames = "setmealCache",allEntries = true)//删除所有缓存数据
     public Result startOrEnd(@PathVariable("status") Integer status,Integer id){
         log.info("要修改状态的菜品id为：{},其要修改的状态为{}",id,status==1?"启售":"停售");
         setmealServiceImpl.startOrEnd(status,id);
@@ -55,6 +59,7 @@ public class SetmealController {
     }
     @ApiOperation("修改菜品类别信息")
     @PutMapping
+    @CacheEvict(cacheNames = "setmealCache",allEntries = true)//删除所有缓存数据
     public Result update(@RequestBody SetmealDTO setmealDTO){
         log.info("要修改的菜品类别信息为{}",setmealDTO);
         setmealServiceImpl.update(setmealDTO);
