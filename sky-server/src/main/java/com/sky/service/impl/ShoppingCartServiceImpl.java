@@ -29,7 +29,10 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     private SetmealDishMapper setmealDishMapper;
 
 
-
+    /**
+     * 购物车新增
+     * @param shoppingCartDTO
+     */
     public void add(ShoppingCartDTO shoppingCartDTO) {
         //先查询要加的数据在ShoppingCart里面有没有
         ShoppingCart shoppingCart = new ShoppingCart();
@@ -59,5 +62,17 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
             shoppingCart.setCreateTime(LocalDateTime.now());
             shoppingCartMapper.insert(shoppingCart);
         }
+    }
+
+    /**
+     * 查看购物车
+     * @return
+     */
+    public List<ShoppingCart> list() {
+        ShoppingCart shoppingCart = ShoppingCart.builder()
+                .userId(BaseContext.getCurrentId())
+                .build();
+        List<ShoppingCart> list=shoppingCartMapper.findByUserAndDishId(shoppingCart);
+        return list;
     }
 }
