@@ -4,6 +4,7 @@ import com.sky.result.Result;
 import com.sky.service.ReportService;
 import com.sky.service.impl.ReportServiceImpl;
 import com.sky.vo.TurnoverReportVO;
+import com.sky.vo.UserReportVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -30,7 +31,13 @@ public class ReportController {
             @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate end){
         log.info("营业额统计的起始日期为{}.{}",begin,end);
         return Result.success(reportServiceImpl.sumTurnOver(begin,end));
-
     }
-
+    @GetMapping("/userStatistics")
+    @ApiOperation("用户数量统计")
+    public Result<UserReportVO> UserStatistics(
+            @DateTimeFormat(pattern="yyyy-MM-dd") LocalDate begin,
+            @DateTimeFormat(pattern="yyyy-MM-dd") LocalDate end){
+        log.info("统计用户数据的起始时间为{}，{}",begin,end);
+        return Result.success(reportServiceImpl.sumUser(begin,end));
+    }
 }

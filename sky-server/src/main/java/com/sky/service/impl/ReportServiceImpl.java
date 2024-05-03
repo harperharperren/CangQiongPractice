@@ -2,8 +2,10 @@ package com.sky.service.impl;
 
 import com.sky.entity.Orders;
 import com.sky.mapper.OrderMapper;
+import com.sky.mapper.UserMapper;
 import com.sky.service.ReportService;
 import com.sky.vo.TurnoverReportVO;
+import com.sky.vo.UserReportVO;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,6 +22,8 @@ import java.util.Map;
 public class ReportServiceImpl implements ReportService {
     @Autowired
     private OrderMapper orderMapper;
+    @Autowired
+    private UserMapper userMapper;
     /**
      * 查询营业额
      * @param begin
@@ -52,5 +56,41 @@ public class ReportServiceImpl implements ReportService {
                 .turnoverList(turnOverListStr)
                 .build();
         return res;
+    }
+
+    /**
+     * 统计用户数量
+     * @param begin
+     * @param end
+     * @return
+     */
+    public UserReportVO sumUser(LocalDate begin, LocalDate end) {
+        List<LocalDate> dateList = new ArrayList();//拼凑出日期
+        dateList.add(begin);
+        while(!begin.equals(end)){
+            begin=begin.plusDays(1);
+            dateList.add(begin);
+        }
+        List<Integer> newUserList=new ArrayList();//拼凑出新增用户数量
+        List<Integer> totalUserList=new ArrayList();//拼凑出总用户数量
+        for (LocalDate date : dateList) {
+            LocalDateTime beginTime=LocalDateTime.of(date,LocalTime.MIN);
+            LocalDateTime endTime=LocalDateTime.of(date,LocalTime.MAX);
+            Integer newUser=userMapper.getSumByDate(beginTime,endTime);//获取每日新增用户数
+            Integer totalUser=userMapper.getSumByDate(null,endTime);//获取截止目前的用户总数
+            newUser=(newUser==null)?0:newUser;
+            totalUser=(totalUser==null)?0:totalUser;
+            newUserList.add(newUser);
+            totalUserList.add(totalUser);
+        }
+        String dateListStr=StringUtils.join(dateList,",");
+        String newUserListStr=StringUtils.join(newUserList,",");
+        String totalUserListStr=StringUtils.join(totalUserList,",");
+        UserReportVO userReportVO = UserReportVO.builder()
+                .dateList(dateListStr)
+                .newUserList(newUserListStr)
+                .totalUserList(totalUserListStr)
+                .build();
+        return userReportVO;
     }
 }

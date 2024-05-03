@@ -5,6 +5,8 @@ import com.sky.entity.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
+import java.time.LocalDateTime;
+
 @Mapper
 public interface UserMapper {
 
@@ -31,4 +33,12 @@ public interface UserMapper {
      */
     @Select("select * from user where id=#{id}")
     User getById(Long userId);
+
+    /**
+     * 根据日期查询用户数量
+     * @param beginTime
+     * @param endTime
+     * @return
+     */
+    Integer getSumByDate(LocalDateTime beginTime, LocalDateTime endTime);
 }

@@ -8,4 +8,15 @@
         insert into user (openid,name,phone,sex,id_number,avatar,create_time)
         values (#{openid}, #{name}, #{phone}, #{sex}, #{idNumber}, #{avatar},#{createTime})
     </insert>
+    <select id="getSumByDate" resultType="java.lang.Integer">
+        select count(*) from user
+        <where>
+            <if test="beginTime!=null">
+                and create_Time &gt; #{beginTime}
+            </if>
+            <if test="endTime!=null">
+                and create_Time &lt; #{endTime}
+            </if>
+        </where>
+    </select>
 </mapper>
