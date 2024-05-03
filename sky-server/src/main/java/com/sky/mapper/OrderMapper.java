@@ -58,4 +58,13 @@ public interface OrderMapper {
      * @return
      */
     Double getSumAcountByMap(Map map);
+
+    /**
+     * 根据状态和起始时间统计订单
+     * @param status
+     * @param beginTime
+     * @param endTime
+     * @return
+     */
+    Integer getByStatusAndBeginEndTime(Integer status, LocalDateTime beginTime, LocalDateTime endTime);
 }
