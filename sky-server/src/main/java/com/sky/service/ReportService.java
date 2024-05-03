@@ -1,6 +1,7 @@
 package com.sky.service;
 
 import com.sky.vo.OrderReportVO;
+import com.sky.vo.SalesTop10ReportVO;
 import com.sky.vo.TurnoverReportVO;
 import com.sky.vo.UserReportVO;
 
@@ -13,4 +14,6 @@ public interface ReportService {
     UserReportVO sumUser(LocalDate begin, LocalDate end);
 
     OrderReportVO sumOrder(LocalDate begin, LocalDate end);
+
+    SalesTop10ReportVO salesTop10(LocalDate beginTime, LocalDate endTime);
 }

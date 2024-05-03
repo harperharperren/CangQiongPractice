@@ -1,5 +1,6 @@
 package com.sky.mapper;
 
+import com.sky.dto.GoodsSalesDTO;
 import com.sky.entity.Orders;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
@@ -67,4 +68,12 @@ public interface OrderMapper {
      * @return
      */
     Integer getByStatusAndBeginEndTime(Integer status, LocalDateTime beginTime, LocalDateTime endTime);
+
+    /**
+     * 根据时间找top10销量菜品
+     * @param beginTime
+     * @param endTime
+     * @return
+     */
+    List<GoodsSalesDTO> getSalesTop10(LocalDateTime beginTime, LocalDateTime endTime);
 }
