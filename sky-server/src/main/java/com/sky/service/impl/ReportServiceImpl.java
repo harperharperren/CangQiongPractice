@@ -120,11 +120,11 @@ public class ReportServiceImpl implements ReportService {
             LocalDateTime endTime=LocalDateTime.of(date,LocalTime.MAX);
             Integer orderCount=orderMapper.getByStatusAndBeginEndTime(null,beginTime,endTime);
             Integer validOrderCount=orderMapper.getByStatusAndBeginEndTime(Orders.COMPLETED,beginTime,endTime);
-            totalOrderCount+=orderCount;
-            totalValidOrderCount+=validOrderCount;
             orderCountList.add(orderCount);
             validOrderCountList.add(validOrderCount);
         }
+        totalOrderCount=orderCountList.stream().reduce(Integer::sum).get();//计算总和
+        totalValidOrderCount=validOrderCountList.stream().reduce(Integer::sum).get();//计算总和
         String dateListStr=StringUtils.join(dateList,",");
         String orderCountListStr=StringUtils.join(orderCountList,",");
         String validOrderCountListStr=StringUtils.join(validOrderCountList,",");
